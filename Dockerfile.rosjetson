@@ -4,13 +4,13 @@ ARG ZED_SDK_MAJOR
 ARG ZED_SDK_MINOR
 ARG L4T_MINOR_VERSION
 ARG L4T_MAJOR_VERSION
-ARG ROS_DISTRO_ARG
 
 # Specify the parent image from which we build
 FROM stereolabs/zed:${ZED_SDK_MAJOR}.${ZED_SDK_MINOR}-tools-devel-l4t-r${L4T_MAJOR_VERSION}.${L4T_MINOR_VERSION}
 
-ENV DEBIAN_FRONTEND noninteractive
+ARG ROS_DISTRO_ARG
 ENV ROS_DISTRO ${ROS_DISTRO_ARG}
+ENV DEBIAN_FRONTEND noninteractive
 
 # Setup ROS
 RUN apt-get update -y || true && \
