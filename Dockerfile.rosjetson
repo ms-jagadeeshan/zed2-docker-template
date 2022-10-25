@@ -28,7 +28,7 @@ RUN mkdir -p $ROS_WS/src
 
 # 'src' folder setup
 COPY src $ROS_WS/src
-WORDKIR $ROS_WS/src
+WORKDIR $ROS_WS/src
 
 # Installing ros dependencies of workspace
 RUN apt-get update && \

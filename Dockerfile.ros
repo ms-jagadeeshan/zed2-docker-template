@@ -31,7 +31,7 @@ RUN mkdir -p $ROS_WS/src
 
 # 'src' folder setup
 COPY src $ROS_WS/src
-WORDKIR $ROS_WS/src
+WORKDIR $ROS_WS/src
 
 # if have to clone packages to src, Uncomment below lines
 # RUN git clone <repo>
