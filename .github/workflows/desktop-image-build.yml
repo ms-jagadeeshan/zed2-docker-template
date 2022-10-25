@@ -1,0 +1,43 @@
+name: Desktop image
+
+on:
+  push:
+    paths:
+      - 'Dockerfile.ros'
+      - 'ros_entrypoint.sh'
+      - 'src/**'
+
+jobs:
+  desktop-image:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v3
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      -
+        name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      -
+        name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          file: ./Dockerfile.ros
+          push: true
+          build-args: |
+            ZED_SDK_MAJOR=3
+            ZED_SDK_MINOR=7
+            ROS_DISTRO_ARG=noetic
+            CUDA_MAJOR=11
+            CUDA_MINOR=4
+            UBUNTU_RELEASE_YEAR=20
+          tags: jagamatrix/zed2-docker:desktop
+          cache-from: type=registry,ref=jagamatrix/zed2-docker:buildcache-desktop
+          cache-to: type=registry,ref=jagamatrix/zed2-docker:buildcache-desktop,mode=max
+
