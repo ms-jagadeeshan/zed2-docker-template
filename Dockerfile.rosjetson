@@ -32,6 +32,8 @@ WORKDIR $ROS_WS/src
 
 # Installing ros dependencies of workspace
 RUN apt-get update && \
+    rosdep init && \
+    rosdep update && \
     rosdep install -y --from-paths . --ignore-src --rosdistro noetic && \
     rm -rf /var/lib/apt/lists/*
 

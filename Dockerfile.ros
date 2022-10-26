@@ -37,6 +37,8 @@ WORKDIR $ROS_WS/src
 # RUN git clone <repo>
 #
 RUN apt-get update && \
+    rosdep init && \
+    rosdep update && \
     rosdep install -y --from-paths . --ignore-src --rosdistro noetic && \
     rm -rf /var/lib/apt/lists/*
 
