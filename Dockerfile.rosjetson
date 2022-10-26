@@ -20,6 +20,7 @@ RUN apt-get update -y || true && \
     apt-get update -y || true &&\
     apt-get install -y ros-$ROS_DISTRO-desktop-full build-essential cmake usbutils git libusb-1.0-0-dev -y --allow-unauthenticated && \
     apt-get install -y python3-rosdep python3-rosinstall  python3-rosinstall-generator python3-wstool &&\
+    apt-get install -y ros-noetic-catkin python3-catkin-tools python3-osrf-pycommon && \
     rm -rf /var/lib/apt/lists/*
 
 #Setup ROS workspace
