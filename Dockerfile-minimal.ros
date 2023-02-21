@@ -37,7 +37,7 @@ WORKDIR $ROS_WS/src
 # if have to clone packages to src, Uncomment below lines
 # RUN git clone <repo>
 #
-RUN apt-get update && \
+RUN apt-get update || true && \
     rosdep init && \
     rosdep update && \
     rosdep install -y --from-paths . --ignore-src --rosdistro noetic && \
