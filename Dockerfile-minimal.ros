@@ -6,7 +6,7 @@ ARG CUDA_MAJOR
 ARG CUDA_MINOR
 
 # Specify the parent image from which we build
-FROM stereolabs/zed:${ZED_SDK_MAJOR}.${ZED_SDK_MINOR}-gl-devel-cuda${CUDA_MAJOR}.${CUDA_MINOR}-ubuntu${UBUNTU_RELEASE_YEAR}.04
+FROM stereolabs/zed:${ZED_SDK_MAJOR}.${ZED_SDK_MINOR}-devel-cuda${CUDA_MAJOR}.${CUDA_MINOR}-ubuntu${UBUNTU_RELEASE_YEAR}.04
 
 ARG ROS_DISTRO_ARG
 ENV LOGNAME root

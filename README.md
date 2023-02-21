@@ -22,16 +22,36 @@ bash build-ros-jetson-image.sh
 https://hub.docker.com/repository/docker/jagamatrix/zed2-docker/general
 
 - ROS 1 + Neotic
-```
+```bash
 docker pull jagamatrix/zed2-docker:desktop
 ```
 - ROS 1 + jetson
-```
+```bash
 docker pull jagamatrix/zed2-docker:jetson
 ```
 
 - ROS 1 minimal + desktop
-```
+```bash
 docker pull jagamatrix/zed2-docker:desktop-minimal
 ```
 
+## Usage
+
+- Creating the docker with network permision
+```bash
+docker create -it --runtime nvidia --privileged -e DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --network=host --name zed2-docker-minimal  jagamatrix/zed2-docker:desktop-minimal
+```
+
+   
+- Start the docker and run
+```bash
+# Starting docker
+docker start zed2-docker-minimal
+
+docker exec -it zed2-docker-minimal /ros_entrypoint.sh roslaunch zed_wrapper zed2i.launch
+```
+
+- Host machine
+```
+rviz -d 
+```
