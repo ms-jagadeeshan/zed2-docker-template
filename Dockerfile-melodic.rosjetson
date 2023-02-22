@@ -21,7 +21,7 @@ RUN apt-get update -y || true && \
     apt-get update -y || true &&\
     apt-get install -y ros-${ROS_DISTRO}-desktop-full build-essential cmake usbutils git libusb-1.0-0-dev -y --allow-unauthenticated && \
     apt-get install -y python-rosdep python-rosinstall  python-rosinstall-generator python3-wstool &&\
-    apt-get install -y ros-melodic-catkin python-catkin-tools python-osrf-pycommon || true && \
+    apt-get install -y ros-$(ROS_DISTRO}-catkin python-catkin-tools python-osrf-pycommon || true && \
     rm -rf /var/lib/apt/lists/*
 
 #Setup ROS workspace
