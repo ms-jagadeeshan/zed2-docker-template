@@ -35,7 +35,7 @@ jobs:
             ZED_SDK_MINOR=7
             ROS_DISTRO_ARG=noetic
             CUDA_MAJOR=11
-            CUDA_MINOR=4
+            CUDA_MINOR=7
             UBUNTU_RELEASE_YEAR=20
           tags: jagamatrix/zed2-docker:desktop-minimal
           cache-from: type=registry,ref=jagamatrix/zed2-docker:buildcache-desktop-minimal

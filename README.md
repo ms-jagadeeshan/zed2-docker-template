@@ -37,12 +37,22 @@ docker pull jagamatrix/zed2-docker:desktop-minimal
 
 ## Usage
 
-- Creating the docker with network permision
+### Creating
+
+- Creating the docker network permission alone
 ```bash
-docker create -it --runtime nvidia --privileged -e DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --network=host --name zed2-docker-minimal  jagamatrix/zed2-docker:desktop-minimal
+xhost +si:localuser:root
+docker create -it --runtime nvidia --privileged --network=host --name zed2-docker-minimal  jagamatrix/zed2-docker:desktop-minimal
 ```
 
-   
+- Creating the docker with display, network permission
+```bash
+xhost +si:localuser:root
+docker create -it --runtime nvidia --privileged -e DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --network=host --name zed2-docker  jagamatrix/zed2-docker:desktop
+```
+
+### Starting and running
+
 - Start the docker and run
 ```bash
 # Starting docker
@@ -53,5 +63,6 @@ docker exec -it zed2-docker-minimal /ros_entrypoint.sh roslaunch zed_wrapper zed
 
 - Host machine
 ```
-rviz -d 
+rviz -d zed2i.rviz
 ```
+
