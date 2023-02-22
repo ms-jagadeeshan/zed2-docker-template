@@ -36,14 +36,14 @@ jobs:
         with:
           context: .
           platforms: linux/arm64
-          file: ./Dockerfile.rosjetson
+          file: ./Dockerfile-melodic.rosjetson
           push: true
           build-args: |
             ZED_SDK_MAJOR=3
             ZED_SDK_MINOR=8
             L4T_MAJOR_VERSION=32
             L4T_MINOR_VERSION=7
-            ROS_DISTRO_ARG=noetic
+            ROS_DISTRO_ARG=melodic
           tags: jagamatrix/zed2-docker:jetson
           cache-from: type=registry,ref=jagamatrix/zed2-docker:buildcache-jetson
           cache-to: type=registry,ref=jagamatrix/zed2-docker:buildcache-jetson,mode=max

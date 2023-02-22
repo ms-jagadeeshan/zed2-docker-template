@@ -1,0 +1,50 @@
+# https://developer.nvidia.com/embedded/jetson-linux-archive
+# https://hub.docker.com/r/stereolabs/zed
+ARG ZED_SDK_MAJOR
+ARG ZED_SDK_MINOR
+ARG L4T_MINOR_VERSION
+ARG L4T_MAJOR_VERSION
+
+# Specify the parent image from which we build
+FROM stereolabs/zed:${ZED_SDK_MAJOR}.${ZED_SDK_MINOR}-tools-devel-l4t-r${L4T_MAJOR_VERSION}.${L4T_MINOR_VERSION}
+
+ARG ROS_DISTRO_ARG
+ENV ROS_DISTRO ${ROS_DISTRO_ARG}
+ENV DEBIAN_FRONTEND noninteractive
+
+# Setup ROS
+RUN apt-get update -y || true && \
+    apt-get upgrade -y && \
+    apt-get install -y tzdata curl && \
+    sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list' && \
+    curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | apt-key add - && \
+    apt-get update -y || true &&\
+    apt-get install -y ros-${ROS_DISTRO}-desktop-full build-essential cmake usbutils git libusb-1.0-0-dev -y --allow-unauthenticated && \
+    apt-get install -y python-rosdep python-rosinstall  python-rosinstall-generator python3-wstool &&\
+    apt-get install -y ros-melodic-catkin python-catkin-tools python-osrf-pycommon || true && \
+    rm -rf /var/lib/apt/lists/*
+
+#Setup ROS workspace
+ENV ROS_WS /opt/ros_ws
+RUN mkdir -p ${ROS_WS}/src
+
+# 'src' folder setup
+COPY src ${ROS_WS}/src
+WORKDIR ${ROS_WS}/src
+
+# Installing ros dependencies of workspace
+RUN apt-get update && \
+    rosdep init && \
+    rosdep update && \
+    rosdep install -y --from-paths . --ignore-src --rosdistro ${ROS_DISTRO} && \
+    rm -rf /var/lib/apt/lists/*
+
+# Building workspace
+WORKDIR ${ROS_WS}
+RUN . /opt/ros/${ROS_DISTRO}/setup.sh && catkin config --extend /opt/ros/${ROS_DISTRO} --cmake-args -DCMAKE_BUILD_TYPE=Release && catkin build
+
+# Setup entrypoint
+COPY ./ros_entrypoint.sh /
+ENTRYPOINT ["/ros_entrypoint.sh"]
+
+CMD ["bash"]
