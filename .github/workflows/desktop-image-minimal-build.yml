@@ -32,7 +32,7 @@ jobs:
           push: true
           build-args: |
             ZED_SDK_MAJOR=3
-            ZED_SDK_MINOR=7
+            ZED_SDK_MINOR=8
             ROS_DISTRO_ARG=noetic
             CUDA_MAJOR=11
             CUDA_MINOR=7
