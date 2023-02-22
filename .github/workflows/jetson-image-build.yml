@@ -3,7 +3,7 @@ name: Jetson image
 on:
   push:
     paths:
-      - 'Dockerfile.rosjetson'
+      - 'Dockerfile-melodic.rosjetson'
       - 'ros_entrypoint.sh'
       - 'src/**'
 
