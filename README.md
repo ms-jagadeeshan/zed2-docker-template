@@ -21,6 +21,12 @@ bash build-ros-jetson-image.sh
 ## Already build image
 https://hub.docker.com/repository/docker/jagamatrix/zed2-docker/general
 
+
+- ROS 1 minimal + desktop(Recommeneded)
+```bash
+docker pull jagamatrix/zed2-docker:desktop-minimal
+```
+
 - ROS 1 + Neotic
 ```bash
 docker pull jagamatrix/zed2-docker:desktop
@@ -30,25 +36,38 @@ docker pull jagamatrix/zed2-docker:desktop
 docker pull jagamatrix/zed2-docker:jetson
 ```
 
-- ROS 1 minimal + desktop
-```bash
-docker pull jagamatrix/zed2-docker:desktop-minimal
-```
-
 ## Usage
 
 ### Creating
 
-- Creating the docker network permission alone
+- Nvidia + network(Recommended)
 ```bash
-xhost +si:localuser:root
-docker create -it --runtime nvidia --privileged --network=host --name zed2-docker-minimal  jagamatrix/zed2-docker:desktop-minimal
+# xhost +si:localuser:root
+docker create -it \
+    --gpus all \
+    -e NVIDIA_DRIVER_CAPABILITIES=all \
+    --runtime nvidia \
+    --privileged \
+    --network=host \
+    -v /dev:/dev \
+    --name zed2-docker-minimal  \
+    jagamatrix/zed2-docker:desktop-minimal
 ```
 
-- Creating the docker with display, network permission
+- Nvidia + network + display 
 ```bash
 xhost +si:localuser:root
-docker create -it --runtime nvidia --privileged -e DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --network=host --name zed2-docker  jagamatrix/zed2-docker:desktop
+docker create -it \
+    --gpus all \
+    -e NVIDIA_DRIVER_CAPABILITIES=all \
+    --runtime nvidia \
+    --privileged \
+    --network=host \
+    -v /dev:/dev \
+    -e DISPLAY \
+    -v /tmp/.X11-unix:/tmp/.X11-unix \
+    --name zed2-docker \
+    jagamatrix/zed2-docker:desktop
 ```
 
 ### Starting and running
