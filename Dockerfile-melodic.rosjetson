@@ -20,7 +20,10 @@ RUN apt-get update -y || true && \
     curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | apt-key add - && \
     apt-get update -y || true &&\
     apt-get install -y ros-${ROS_DISTRO}-desktop-full build-essential cmake usbutils git libusb-1.0-0-dev -y --allow-unauthenticated && \
-    apt-get install -y python-rosdep python-rosinstall  python-rosinstall-generator python3-wstool &&\
+    apt-get install -y python-rosdep &&\
+    apt-get install -y python-rosinstall &&\
+    apt-get install -y python-rosinstall-generator &&\
+    apt-get install -y python-wstool &&\
     apt-get install -y ros-${ROS_DISTRO}-catkin python-catkin-tools python-osrf-pycommon || true && \
     rm -rf /var/lib/apt/lists/*
 
