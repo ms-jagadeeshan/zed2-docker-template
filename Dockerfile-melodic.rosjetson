@@ -33,7 +33,7 @@ COPY src ${ROS_WS}/src
 WORKDIR ${ROS_WS}/src
 
 # Installing ros dependencies of workspace
-RUN apt-get update && \
+RUN apt-get update || true && \
     rosdep init && \
     rosdep update && \
     rosdep install -y --from-paths . --ignore-src --rosdistro ${ROS_DISTRO} && \
